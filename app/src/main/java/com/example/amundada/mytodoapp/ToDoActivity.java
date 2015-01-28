@@ -1,6 +1,7 @@
 package com.example.amundada.mytodoapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,9 @@ public class ToDoActivity extends Activity {
     private EditText etItem;
     private ArrayList<String> items; // All items
     private ArrayAdapter<String> aToDoAdapter;
+    public static final String ITEM_TEXT_KEY = "ItemText";
+    public static final String ITEM_INDEX_KEY = "ItemIndex";
+    private final int REQUEST_CODE = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class ToDoActivity extends Activity {
         lvItems.setAdapter(aToDoAdapter);
         etItem = (EditText)findViewById(R.id.etItem);
         supportRemoveItems();
+        supportEditItems();
 
     }
 
@@ -59,6 +64,18 @@ public class ToDoActivity extends Activity {
         }
     }
 
+    private void supportEditItems() {
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(getApplication(), "Edit now", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getApplication(), EditItemActivity.class);
+                i.putExtra(ITEM_TEXT_KEY, items.get(position));
+                i.putExtra(ITEM_INDEX_KEY, position);
+                startActivityForResult(i, REQUEST_CODE);
+            }
+        });
+    }
 
     private void supportRemoveItems() {
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -91,6 +108,17 @@ public class ToDoActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            String itemTxt = data.getExtras().getString(ITEM_TEXT_KEY);
+            int itemIndex = data.getExtras().getInt(ITEM_INDEX_KEY);
+            items.set(itemIndex, itemTxt);
+            aToDoAdapter.notifyDataSetChanged();
+            writeItems();
+        }
     }
 
     public void onAddItemClick(View view) {
