@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/amundada/Documents/Android/MyToDoApp/app/build/intermediates/pre-dexed/debug/commons-io-2.4-9badf1b38ac9dfb094ed8d14ceba914a303e5caf.jar"
+        jar="/Users/amundada/Documents/Android/MyToDoApp/app/libs/commons-io-2.4.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad"/>
+
+</pre-dex-items>
