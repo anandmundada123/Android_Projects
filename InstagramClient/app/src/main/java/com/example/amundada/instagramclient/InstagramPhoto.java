@@ -9,5 +9,6 @@ public class InstagramPhoto {
     public String imageUrl;
     public int likeCount;
     public int imageHeight;
-
+    public String comment1;
+    public String comment2;
 }

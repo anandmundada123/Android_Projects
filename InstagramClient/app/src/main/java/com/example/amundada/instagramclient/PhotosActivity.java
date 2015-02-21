@@ -2,6 +2,7 @@ package com.example.amundada.instagramclient;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,10 +24,14 @@ public class PhotosActivity extends Activity {
     public static final String CLIENT_ID = "c44ad2d71da04a35b487552b6620c837";
     private ArrayList<InstagramPhoto> photos;
     private InstagramPhotosAdapter aPhotos;
+    private SwipeRefreshLayout swipeContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
+
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         photos = new ArrayList<InstagramPhoto>();
 
         aPhotos = new InstagramPhotosAdapter(this, photos);
@@ -34,8 +39,24 @@ public class PhotosActivity extends Activity {
         ListView lvPhotos = (ListView) findViewById(R.id.lvPhotos);
         // Bind list view to adapter
         lvPhotos.setAdapter(aPhotos);
-        // SEND OUT API REQUEST and get popular photos
+
         fetchPopularPhotos();
+        // SEND OUT API REQUEST and get popular photos
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                fetchPopularPhotos();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     private void fetchPopularPhotos() {
@@ -59,6 +80,8 @@ public class PhotosActivity extends Activity {
 
                 // iterate through all json Array and get info and store into java object
 
+                // Clear out all previous contents If you want to keep previous contents then don't add this.
+                //photos.clear();
                 JSONArray photosJson = null;
 
                 try {
@@ -82,13 +105,28 @@ public class PhotosActivity extends Activity {
                         // like Count
                         photo.likeCount = photoJson.getJSONObject("likes").getInt("count");
 
-                        photos.add(photo);
+                        JSONArray commentsArray = photoJson.getJSONObject("comments").getJSONArray("data");
+
+                        if (commentsArray.length() == 0) {
+                            photo.comment1 = "No Comments present";
+                            photo.comment2 = "No Comments Present";
+                        } else if (commentsArray.length() >= 2){
+                            photo.comment1 = commentsArray.getJSONObject(0).getString("text");
+                            photo.comment2 = commentsArray.getJSONObject(1).getString("text");
+                        } else {
+                            photo.comment1 = commentsArray.getJSONObject(0).getString("text");
+                            photo.comment2 = "No Comments Present";
+                        }
+
+                        // If you want to keep previous photos as well. Add always at the index 0
+                        photos.add(0,photo);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
                 aPhotos.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
             }
 
             @Override

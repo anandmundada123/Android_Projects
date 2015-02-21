@@ -25,4 +25,5 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.5'
     // Load images from network and store in list view
     compile 'com.squareup.picasso:picasso:2.5.0'
+    compile 'com.android.support:support-v4:19.+'
 }
