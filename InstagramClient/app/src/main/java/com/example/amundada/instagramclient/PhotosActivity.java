@@ -93,8 +93,13 @@ public class PhotosActivity extends Activity {
                         //AUTHOR: {"data" => [x] => "user" => "username"}
                         photo.userName = photoJson.getJSONObject("user").getString("username");
 
+                        // Profile Image
+
+                        photo.profileUrl = photoJson.getJSONObject("user").getString("profile_picture");
+
                         // CAPTION: {"data" => [x] => "caption" => "text"}
                         photo.caption = photoJson.getJSONObject("caption").getString("text");
+
 
                         // URL: {"data" => [x] => "images" => "standard_resolution" => "url"}
                         photo.imageUrl = photoJson.getJSONObject("images").getJSONObject("standard_resolution").getString("url");
@@ -103,7 +108,7 @@ public class PhotosActivity extends Activity {
                         photo.imageHeight = photoJson.getJSONObject("images").getJSONObject("standard_resolution").getInt("height");
 
                         // like Count
-                        photo.likeCount = photoJson.getJSONObject("likes").getInt("count");
+                        photo.likeCount = photoJson.getJSONObject("likes").getString("count");
 
                         JSONArray commentsArray = photoJson.getJSONObject("comments").getJSONArray("data");
 

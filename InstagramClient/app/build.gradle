@@ -19,6 +19,10 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     // Send network request
@@ -26,4 +30,5 @@ dependencies {
     // Load images from network and store in list view
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'com.android.support:support-v4:19.+'
+    compile 'com.makeramen:roundedimageview:1.5.0'
 }
