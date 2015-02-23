@@ -1,12 +1,18 @@
 package com.example.amundada.instagramclient;
 
 import android.app.Activity;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -16,7 +22,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
 public class PhotosActivity extends Activity {
@@ -40,6 +49,12 @@ public class PhotosActivity extends Activity {
         // Bind list view to adapter
         lvPhotos.setAdapter(aPhotos);
 
+        lvPhotos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               System.out.println(position);
+            }
+        });
         fetchPopularPhotos();
         // SEND OUT API REQUEST and get popular photos
         // Setup refresh listener which triggers new data loading
@@ -123,6 +138,20 @@ public class PhotosActivity extends Activity {
                             photo.comment2 = "No Comments Present";
                         }
 
+                        if (photoJson.has("videos")) {
+                            photo.videoUrl = photoJson.getJSONObject("videos").getJSONObject("low_bandwidth").getString("url");
+                        } else {
+                            photo.videoUrl = null;
+                        }
+
+                        if(photoJson.has("location") && !photoJson.isNull("location")) {
+                            double lat = photoJson.getJSONObject("location").getDouble("latitude");
+                            double lng = photoJson.getJSONObject("location").getDouble("longitude");
+                            getLocation(lat, lng, getApplicationContext());
+                        } else {
+                            photo.location = "";
+                        }
+                        //
                         // If you want to keep previous photos as well. Add always at the index 0
                         photos.add(0,photo);
                     }
@@ -141,6 +170,18 @@ public class PhotosActivity extends Activity {
         });
     }
 
+    public void getLocation(double lat, double lng, Context context) {
+
+        Geocoder gcd = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = gcd.getFromLocation(lat, lng, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addresses.size() > 0)
+            System.out.println(addresses.get(0).getLocality());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

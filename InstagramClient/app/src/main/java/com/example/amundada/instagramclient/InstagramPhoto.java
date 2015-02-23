@@ -12,4 +12,6 @@ public class InstagramPhoto {
     public String comment1;
     public String comment2;
     public String profileUrl;
+    public String videoUrl;
+    public String location;
 }

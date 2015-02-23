@@ -71,7 +71,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         ImageView ivProfile = (ImageView) convertView.findViewById(R.id.ivProfile);
         TextView tvProfileName = (TextView) convertView.findViewById(R.id.tvProfileName);
         TextView tvPostDate = (TextView) convertView.findViewById(R.id.tvPostDate);
-
+        TextView tvType = (TextView) convertView.findViewById(R.id.tvtype);
         ImageView ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
         TextView tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
         TextView tvComment1 = (TextView) convertView.findViewById(R.id.tvComment1);
@@ -83,7 +83,11 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         tvComment2.setText(photo.comment2);
         tvProfileName.setText(photo.userName);
         tvPostDate.setText("\u2764" + " " + photo.likeCount);
-
+        if (photo.videoUrl == null) {
+            tvType.setText("Image");
+        } else {
+            tvType.setText("Video");
+        }
         //Picasso.with(getContext()).load(photo.imageUrl).resize(width, height).placeholder(R.drawable.ic_placeholder).into(ivPhoto);
         Picasso.with(getContext()).load(photo.imageUrl)
                 .transform(PhotoTransformation)
