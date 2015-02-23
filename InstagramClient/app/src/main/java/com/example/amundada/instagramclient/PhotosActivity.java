@@ -2,6 +2,7 @@ package com.example.amundada.instagramclient;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -52,7 +53,9 @@ public class PhotosActivity extends Activity {
         lvPhotos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               System.out.println(position);
+                if(photos.get(position).videoUrl != null) {
+                    showRemoteVideo(photos.get(position).videoUrl);
+                }
             }
         });
         fetchPopularPhotos();
@@ -72,6 +75,13 @@ public class PhotosActivity extends Activity {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+    }
+
+    public void showRemoteVideo(String url) {
+        Intent i = new Intent(getApplicationContext(), VideoActivity.class);
+
+        i.putExtra("url", url);
+        startActivity(i);
     }
 
     private void fetchPopularPhotos() {
