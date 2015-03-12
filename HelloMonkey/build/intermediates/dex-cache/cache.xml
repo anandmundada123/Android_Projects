@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/build/intermediates/pre-dexed/debug/twilioclient-android-9964fc3247bf9cd6ab41a603b602bdc1a76fcd64.jar"
+        jar="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/libs/twilioclient-android.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="5377c4a79117282a6c7b6a507057897859e144ce"/>
+
+</pre-dex-items>

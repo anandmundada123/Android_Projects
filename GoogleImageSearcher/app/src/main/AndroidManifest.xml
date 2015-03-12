@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.FullImage"
+            android:label="@string/title_activity_full_image"
+            android:parentActivityName=".activities.SearchActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.amundada.googleimagesearcher.activities.SearchActivity" />
+        </activity>
     </application>
 
 </manifest>

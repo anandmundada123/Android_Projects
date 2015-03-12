@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/src/main/res" >
+            <file
+                name="dial"
+                path="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/src/main/res/drawable/dial.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="hangup"
+                path="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/src/main/res/drawable/hangup.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/src/main/res/drawable/ic_launcher.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="main"
+                path="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/src/main/res/layout/main.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                path="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/src/main/res/values/strings.xml"
+                qualifiers="" >
+                <string name="app_name" >HelloMonkey
+                </string>
+            </file>
+        </source>
+        <source path="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/build/generated/res/rs/debug" />
+        <source path="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/build/generated/res/generated/debug" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/Users/amundada/Documents/Android/Android_codepath/HelloMonkey/app/src/debug/res" />
+    </dataSet>
+
+</merger>
