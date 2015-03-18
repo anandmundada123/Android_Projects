@@ -2,16 +2,38 @@ package com.example.amundada.navdrawerdemo;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 
 public class MainActivity extends ActionBarActivity {
 
+    private FragmentNavigationDrawer dlDrawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Set a Toolbar to replace the ActionBar.
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Find our drawer view
+        dlDrawer = (FragmentNavigationDrawer) findViewById(R.id.drawer_layout);
+        // Setup drawer view
+        dlDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.lvDrawer), toolbar,
+                R.layout.drawer_nav_item, R.id.flContent);
+        // Add nav items
+        dlDrawer.addNavItem("First", "First Fragment", FirstFragment.class);
+        dlDrawer.addNavItem("Second", "Second Fragment", SecondFragment.class);
+        dlDrawer.addNavItem("Third", "Third Fragment", ThirdFragment.class);
+        // Select default
+        if (savedInstanceState == null) {
+            dlDrawer.selectDrawerItem(0);
+        }
+
     }
 
 

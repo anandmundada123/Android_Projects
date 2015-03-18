@@ -21,8 +21,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-         >
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="AA_DB_NAME"
             android:value="RestClient.db" />
@@ -32,7 +31,7 @@
 
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,9 +50,17 @@
         </activity>
         <activity
             android:name=".TimelineActivity"
+            android:icon="@drawable/twitter_logo"
             android:label="@string/title_activity_timeline"
-            android:theme="@style/Theme.Twitter"
-            android:icon="@drawable/twitter_logo">
+            android:theme="@style/Theme.Twitter" >
+        </activity>
+        <activity
+            android:name=".NewTweetActivity"
+            android:label="@string/title_activity_new_tweet" >
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile" >
         </activity>
     </application>
 

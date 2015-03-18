@@ -43,13 +43,50 @@ public class TwitterClient extends OAuthBaseClient {
   	 *	 since_id
      */
 
-    public void getHomeTimeLine(int since_id, int count, AsyncHttpResponseHandler handler) {
+    public void getHomeTimeLine(long max_id, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         // Can specify query string params directly or through RequestParams.
         RequestParams params = new RequestParams();
-        params.put("count", count);
-        params.put("since_id", since_id);
+        params.put("count", 25);
+        params.put("since_id", 1);
+        if (max_id > 0) {
+            params.put("max_id", max_id);
+        }
         client.get(apiUrl, params, handler);
+    }
+
+
+    public void getMentionsTimeLine(long max_id, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+        // Can specify query string params directly or through RequestParams.
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("since_id", 1);
+        if (max_id > 0) {
+            params.put("max_id", max_id);
+        }
+        client.get(apiUrl, params, handler);
+    }
+
+    public void postTweet(String statusStr, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/update.json");
+        RequestParams params = new RequestParams();
+        params.put("status", statusStr);
+        client.post(apiUrl, params, handler);
+
+    }
+
+    public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("screen_name", screenName);
+        client.get(apiUrl, params, handler);
+    }
+
+    public void getProfile(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("account/verify_credentials.json");
+        client.get(apiUrl, null, handler);
     }
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
